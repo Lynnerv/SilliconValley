@@ -1,0 +1,55 @@
+@model IEnumerable<SilliconValley.Integration.reqres.dto.User>
+
+@{
+    ViewData["Title"] = "ListaUsuarios";
+}
+
+<div class="navi"></div>
+<div class="container">
+
+    <h1 class=" text-center">Usuario</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.first_name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.last_name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.avatar)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.first_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.last_name)
+                    </td>
+                    <td>
+                        <img src="@Html.DisplayFor(modelItem => item.avatar)" class="d-block image-fit ">                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
