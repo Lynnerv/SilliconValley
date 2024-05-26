@@ -70,5 +70,28 @@ namespace SilliconValley.Integration.reqres
             }
             return listUsers;
         }
+        public async Task<User?> GetUserById(int? userId)
+        {
+            string requestUrl = $"{API_URL}/{userId}"; 
+            User? user = null;
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                     HttpResponseMessage response = await client.GetAsync(requestUrl);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var json = await response.Content.ReadAsStringAsync();
+                        var jsonObject = JObject.Parse(json);
+                        user = jsonObject["data"].ToObject<User>();
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    _logger.LogDebug($"Error al llamar a la API: {ex.Message}");
+                }
+            }
+            return user;
+        }
     }
 }

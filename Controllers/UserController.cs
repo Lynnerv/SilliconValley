@@ -30,6 +30,11 @@ namespace SilliconValley.Controllers
             return View(filtro);
         }
 
+        public async Task<IActionResult> Details(int? id)
+        {
+            User ?user = await _integration.GetUserById(id);
+            return View(user);
+        }
         public IActionResult Register()
         {
             return View();
