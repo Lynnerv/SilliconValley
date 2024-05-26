@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Text;
 using SilliconValley.Integration.reqres.dto;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace SilliconValley.Integration.reqres
 {
@@ -44,6 +45,30 @@ namespace SilliconValley.Integration.reqres
                 }
             }
             return msj;
+        }
+        public async Task<List<User>> GetAll()
+        {
+            string requestUrl = $"{API_URL}";
+            List<User> listUsers = new List<User>();
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(requestUrl);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var json = await response.Content.ReadAsStringAsync();
+                        var jsonObject = JObject.Parse(json);                    
+                    var usersArray = jsonObject["data"].ToObject<List<User>>();
+                    return usersArray;
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    _logger.LogDebug($"Error al llamar a la API: {ex.Message}");
+                }
+            }
+            return listUsers;
         }
     }
 }

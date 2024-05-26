@@ -21,9 +21,13 @@ namespace SilliconValley.Controllers
             _integration = integration;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<User> user = await _integration.GetAll();
+            List<User> filtro = user
+            .OrderBy(users => users.id)            
+            .ToList();
+            return View(filtro);
         }
 
         public IActionResult Register()
